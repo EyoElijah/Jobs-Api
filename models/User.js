@@ -1,8 +1,8 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please provide a name"],
@@ -47,4 +47,4 @@ userSchema.methods.comparePassword = async function (userPassword) {
   const isMatch = await bcrypt.compare(userPassword, this.password);
   return isMatch;
 };
-module.exports = model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
