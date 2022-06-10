@@ -112,3 +112,51 @@ describe("GET a single job ", () => {
     expect(response.body.msg).toEqual("Authentication invalid");
   });
 });
+
+describe("PATCH a single job", () => {
+  test("should update a single job provided authorization", async () => {
+    const newJob = {
+      company: "Facebook",
+      position: "Technical Lead",
+    };
+    const response = await request(app)
+      .patch(`/api/v1/jobs/${jobId}`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send(newJob);
+    expect(response.statusCode).toBe(200);
+    expect(response.body.job).toBeTruthy();
+    expect(response.body.job.status).toEqual("pending");
+    expect(response.body.job.company).toEqual("Facebook");
+  });
+
+  test("should not update if not authorization is provided", async () => {
+    const newJob = {
+      company: "Facebook",
+      position: "Technical Lead",
+    };
+    const response = await request(app)
+      .patch(`/api/v1/jobs/${jobId}`)
+      .send(newJob);
+    //   .set("Authorization", `Bearer ${accessToken}`);
+    expect(response.statusCode).toEqual(401);
+    expect(response.body.jobs).toBeFalsy();
+    expect(response.body.msg).toEqual("Authentication invalid");
+  });
+});
+
+describe("Delete job routes", () => {
+  test("should delete a job belonging a particular user", async () => {
+    const response = await request(app)
+      .delete(`/api/v1/jobs/${jobId}`)
+      .set("Authorization", `Bearer ${accessToken}`);
+    expect(response.statusCode).toBe(200);
+  });
+
+  test("should not delete a job belonging a particular user if not authorization is provided", async () => {
+    const response = await request(app).delete(`/api/v1/jobs/${jobId}`);
+    //   .set("Authorization", `Bearer ${accessToken}`);
+
+    expect(response.statusCode).toEqual(401);
+    expect(response.body.msg).toEqual("Authentication invalid");
+  });
+});

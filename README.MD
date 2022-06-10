@@ -10,6 +10,7 @@ For development, you will need Node.js, MongoDb, Yarn or NPM installed in your d
 - express
 - mongodb
 - swagger
+- jest && supertest
 
 ## Getting Started
 
