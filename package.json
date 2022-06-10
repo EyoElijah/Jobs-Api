@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js",
+    "dev": "SET NODE_ENV=development&& nodemon app.js",
+    "test": "SET NODE_ENV=test&& jest"
   },
   "author": "",
   "license": "ISC",
@@ -26,7 +28,9 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.9"
+    "jest": "^28.1.0",
+    "nodemon": "^2.0.9",
+    "supertest": "^6.2.3"
   },
   "engines": {
     "node": "16.x"
