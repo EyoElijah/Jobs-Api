@@ -41,7 +41,7 @@ const YAML = require("yamljs");
 const swaggerDocument = YAML.load("./swagger.yaml");
 
 app.get("/", (req, res) => {
-  res.send("<h1>Jobs API</h1><a href='/api-docs/'>Documentation</a>");
+  res.json("<h1>Jobs API</h1><a href='/api-docs/'>Documentation</a>");
 });
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
