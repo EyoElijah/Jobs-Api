@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 async function connectDB() {
-  return mongoose.connect(URI, {
+  return await mongoose.connect(URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
