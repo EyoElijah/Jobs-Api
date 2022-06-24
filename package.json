@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "dev": "SET NODE_ENV=development&& nodemon app.js",
-    "test": "SET NODE_ENV=test&& jest"
+    "test": "cross-env NODE_ENV=test&& jest"
   },
   "author": "",
   "license": "ISC",
