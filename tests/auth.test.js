@@ -2,19 +2,23 @@ const app = require("../app");
 const User = require("../models/User");
 const request = require("supertest");
 
-afterAll(async () => {
-  await User.deleteMany();
-});
+const { faker } = require("@faker-js/faker");
+
+// afterAll(async () => {
+//   await User.deleteMany();
+// });
+
+const signUpData = {
+  name: faker.internet.userName(),
+  email: faker.internet.email(),
+  password: faker.internet.password(),
+};
 
 describe("POST auth / register route", () => {
   test("should register a user /register", async () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/register")
-      .send({
-        name: "precious",
-        email: "precious@gmail.com",
-        password: "password",
-      });
+      .send(signUpData);
 
     expect(statusCode).toBe(201);
     expect(body.token).toBeTruthy();
@@ -32,11 +36,7 @@ describe("POST auth / register route", () => {
   test("should not register a user with an email taken ", async () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/register")
-      .send({
-        name: "favour",
-        email: "favour@gmail.com",
-        password: "password",
-      });
+      .send(signUpData);
 
     expect(statusCode).toBe(400);
     expect(body.token).toBeFalsy();
@@ -50,8 +50,8 @@ describe("POST auth / register route", () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/register")
       .send({
-        email: "favour@gmail.com",
-        password: "password",
+        email: faker.internet.email(),
+        password: faker.internet.password(),
       });
 
     expect(statusCode).toEqual(400);
@@ -66,8 +66,8 @@ describe("POST auth / register route", () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/register")
       .send({
-        name: "favour",
-        password: "password",
+        name: faker.internet.userName(),
+        password: faker.internet.password(),
       });
 
     expect(statusCode).toEqual(400);
@@ -82,8 +82,8 @@ describe("POST auth / register route", () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/register")
       .send({
-        name: "favour",
-        email: "favour@gmail.com",
+        name: faker.internet.userName(),
+        email: faker.internet.email(),
       });
 
     expect(statusCode).toEqual(400);
@@ -98,17 +98,17 @@ describe("POST auth / register route", () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/register")
       .send({
-        name: "favour",
-        email: "favour@gmail.com",
-        password: "pass",
+        name: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: 12345,
       });
 
     expect(statusCode).toEqual(400);
     expect(body.token).toBeFalsy();
     expect(body.user).toBeFalsy();
-    expect(body.msg).toBe(
-      "Path `password` (`pass`) is shorter than the minimum allowed length (6)."
-    );
+    expect(body).toEqual({
+      msg: "Path `password` (`12345`) is shorter than the minimum allowed length (6).",
+    });
   });
 });
 
@@ -117,8 +117,8 @@ describe("POST auth /login routes", () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/login")
       .send({
-        email: "favour@gmail.com",
-        password: "password",
+        email: signUpData.email,
+        password: signUpData.password,
       });
 
     expect(statusCode).toEqual(200);
@@ -138,8 +138,9 @@ describe("POST auth /login routes", () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/login")
       .send({
-        password: "password",
+        password: signUpData.password,
       });
+
     expect(statusCode).toEqual(400);
     expect(body.user).toBeFalsy();
     expect(body.token).toBeFalsy();
@@ -150,7 +151,7 @@ describe("POST auth /login routes", () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/login")
       .send({
-        password: "password",
+        email: signUpData.email,
       });
 
     expect(statusCode).toEqual(400);
@@ -177,3 +178,5 @@ describe("POST auth /login routes", () => {
     });
   });
 });
+
+module.exports = { signUpData };

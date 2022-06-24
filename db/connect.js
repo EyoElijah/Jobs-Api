@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "development") {
   URI = process.env.DEV_DB_URI;
 }
 if (process.env.NODE_ENV === "test") {
-  URI = process.env.TEST_DB_URI;
+  URI = process.env.TEST_DB;
 }
 if (process.env.NODE_ENV === "production") {
   URI = process.env.MONGO_URI;
@@ -21,7 +21,5 @@ async function connectDB() {
     useFindAndModify: false,
   });
 }
-
-// console.log(URI);
 
 module.exports = connectDB;

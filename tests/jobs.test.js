@@ -1,15 +1,15 @@
 const app = require("../app");
 const Job = require("../models/Job");
 const request = require("supertest");
+const { signUpData } = require("./auth.test");
 
 let accessToken;
 let jobId;
 beforeEach(async () => {
   try {
     const res = await request(app).post("/api/v1/auth/login").send({
-      name: "favour",
-      email: "favour@gmail.com",
-      password: "password",
+      email: signUpData.email,
+      password: signUpData.password,
     });
     accessToken = res.body.token;
   } catch (error) {
