@@ -164,7 +164,7 @@ describe("POST auth /login routes", () => {
     const { statusCode, body } = await request(app)
       .post("/api/v1/auth/login")
       .send({
-        email: "favo@gmail.com",
+        email: "favour@gmail.com",
         password: "password",
       })
       .set("Accept", "application/json")
