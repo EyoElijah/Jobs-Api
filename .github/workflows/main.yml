@@ -23,7 +23,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
       - name: NPM install, build and test
         run: |
           npm install
@@ -33,19 +33,19 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           JWT_LIFETIME: ${{ secrets.JWT_LIFETIME }}
 
-  # deploy:
-  #   name: Deploy
-  #   needs: [test]
-  #   runs-on: ubuntu-latest
+  deploy:
+    name: Deploy
+    needs: [test]
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #       with:
-  #         fetch-depth: 0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-  #     - name: Add remote origin to Heroku
-  #       run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+      - name: Add remote origin to Heroku
+        run: git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
 
-  #     - name: Deploy code to heroku
-  #       run: git push --force heroku main
+      - name: Deploy code to heroku
+        run: git push --force heroku master
