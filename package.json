@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon app.js",
     "dev": "cross-env NODE_ENV=development&& nodemon app.js",
-    "test": "cross-env NODE_ENV=test&& jest"
+    "test": "cross-env NODE_ENV=test&& jest --runInBand --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",
@@ -35,6 +35,7 @@
     "supertest": "^6.2.3"
   },
   "engines": {
-    "node": "16.x"
+    "node": "16.x",
+    "npm": "8.x"
   }
 }

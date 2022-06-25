@@ -1,12 +1,12 @@
 const app = require("../app");
-const User = require("../models/User");
+const mongoose =  require('mongoose');
 const request = require("supertest");
 
 const { faker } = require("@faker-js/faker");
 
-// afterAll(async () => {
-//   await User.deleteMany();
-// });
+afterAll(async () => {
+  await mongoose.connection.close()
+});
 
 const signUpData = {
   name: faker.internet.userName(),
