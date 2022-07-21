@@ -17,7 +17,7 @@ For development, you will need Node.js, MongoDb, Yarn or NPM installed in your d
 ```sh
 # clone it
 git clone https://github.com/EyoElijah/Jobs-api.git
-cd News-Blog-API
+cd Jobs-api
 
 # Make it your own
 rm -rf .git && git init && npm init
